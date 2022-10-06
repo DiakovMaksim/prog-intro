@@ -88,9 +88,9 @@ public class Scanner {
                 inNext = true;
                 nextLine.append(buffer[position]);
             } else {
-                if (inNext) {
+                //    if (inNext) {
                     return nextLine.toString();
-                }
+                //}
             }
             position++;
             if (position >= quantity & quantity > 0) {
