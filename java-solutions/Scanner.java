@@ -124,6 +124,14 @@ public class Scanner {
         while (hasNext());
         return 0;
     }
+    public int nextIntabc() {
+        String nextWord = next();
+        int nextabc = 0;
+        for (int i = 0; i < nextWord.length(); i++) {
+            nextabc = nextabc * 10 + (int) nextWord.charAt(i) - (int) 'a';
+        }
+        return nextabc;
+    }
     public boolean hasNextLine() {
         while (quantity > 0) {
             while (position < quantity) {
