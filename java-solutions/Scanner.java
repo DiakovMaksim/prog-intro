@@ -33,7 +33,7 @@ public class Scanner {
     public Scanner(String inputName) {
         try {
             input = new BufferedReader(new StringReader(inputName));
-            quantity = input.read(buffer, 0, 1024);
+            quantity = input.read(buffer, 0, buffer.length);
         } catch (IOException e) {
             System.out.println("Reading error: " + e.getMessage());
         }
@@ -42,57 +42,71 @@ public class Scanner {
         try {
             input = new BufferedReader(new InputStreamReader(
                     inputName, "UTF-8"));
-            quantity = input.read(buffer, 0, 1024);
+            quantity = input.read(buffer, 0, buffer.length);
         } catch (IOException e) {
             System.out.println("Reading error: " + e.getMessage());
         }
     }
     private void rebuffering() {
         try {
-            quantity = input.read(buffer, 0, 1024);
+            quantity = input.read(buffer, 0, buffer.length);
             position = 0;
         } catch (IOException e) {
             System.out.println("Reading error: " + e.getMessage());
         }
     }
     public String next() {
-        if (position >= quantity & quantity > 0) {
-            rebuffering();
-        }
+//        if (position >= quantity & quantity > 0) {
+//            rebuffering();
+//        }
+//        boolean inNext = false;
+//        StringBuilder nextString = new StringBuilder();
+//        while (position < quantity) {
+//            if (!Character.isWhitespace(buffer[position])){
+//                inNext = true;
+//                nextString.append(buffer[position]);
+//            } else {
+//                if (inNext) {
+//                    return nextString.toString();
+//                }
+//            }
+//            position++;
+//            if (position >= quantity & quantity > 0) {
+//                rebuffering();
+//            }
+//        }
+//        return nextString.toString();
         boolean inNext = false;
         StringBuilder nextString = new StringBuilder();
-        while (position < quantity) {
-            if (!Character.isWhitespace(buffer[position])){
-                inNext = true;
-                nextString.append(buffer[position]);
-            } else {
-                if (inNext) {
-                    return nextString.toString();
+        while (quantity > 0) {
+            while (position < quantity) {
+                if (!Character.isWhitespace(buffer[position])) {
+                    inNext = true;
+                    nextString.append(buffer[position]);
+                } else {
+                    if (inNext) {
+                        return nextString.toString();
+                    }
                 }
+                position++;
             }
-            position++;
-            if (position >= quantity & quantity > 0) {
-                rebuffering();
-            }
+            rebuffering();
         }
         return nextString.toString();
     }
     public String nextLine() {
-        if (position >= quantity & quantity > 0) {
-            rebuffering();
-        }
         StringBuilder nextLine = new StringBuilder();
-        while (position < quantity) {
-            if (!(buffer[position] == '\n')) {
-                nextLine.append(buffer[position]);
-            } else {
+        while (quantity > 0) {
+            while (position < quantity) {
+                if (!(buffer[position] == '\n')) {
+                    nextLine.append(buffer[position]);
+                } else {
+                    position++;
+                    return nextLine.toString();
+                }
                 position++;
-                return nextLine.toString();
             }
-            position++;
-            if (position >= quantity & quantity > 0) {
-                rebuffering();
-            }
+            rebuffering();
         }
         return nextLine.toString();
     }
