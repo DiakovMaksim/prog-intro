@@ -12,54 +12,39 @@ public class WordStatWordsSuffix {
 				String word = "";
 				while (read >= 0) {
 					char symbol = (char) read;
+					boolean whitespace = true;
 					if (Character.isLetter(symbol) || symbol == '\'' || Character.getType(symbol) == Character.DASH_PUNCTUATION) {
+						whitespace = false;
 						word += symbol;
 						word = word.toLowerCase();
 						if (word.length() > 3) {
 							word = word.substring(1,4);
 						}
-					} else {
+						read = reader.read();
+					}
+					if (word != "" & (whitespace | read < 0)) {
 						boolean founded = false;
-						if (word != "") {
-							for (int i = 0; i < wordQuantities; i++) {
-								if (word.equals(words[i])) {
-									quantities[i]++;
-									word = "";
-									founded = true;
-								}
-							}
-							if (!founded) {
-								if (wordQuantities + 1 >= words.length) {
-									words = Arrays.copyOf(words, 2 * quantities.length);
-									quantities = Arrays.copyOf(quantities, 2 * quantities.length);
-								}
-								words[wordQuantities] = word;
-								quantities[wordQuantities] = 1;
-								wordQuantities++;
+						for (int i = 0; i < wordQuantities; i++) {
+							if (word.equals(words[i])) {
+								quantities[i]++;
 								word = "";
+								founded = true;
 							}
 						}
-					}
-					read = reader.read();
-				}
-				if (word != "") {
-					boolean founded = false;
-					for (int i = 0; i < wordQuantities - 1; i++) {
-						if (word.equals(words[i])) {
-							quantities[i]++;
-							founded = true;
+						if (!founded) {
+							if (wordQuantities + 1 >= words.length) {
+								words = Arrays.copyOf(words, 2 * quantities.length);
+								quantities = Arrays.copyOf(quantities, 2 * quantities.length);
+							}
+							words[wordQuantities] = word;
+							quantities[wordQuantities] = 1;
+							wordQuantities++;
 							word = "";
 						}
-					}
-					if (!founded) {
-						if (wordQuantities + 1 >= words.length) {
-							words = Arrays.copyOf(words, 2 * quantities.length);
-							quantities = Arrays.copyOf(quantities, 2 * quantities.length);
+					} else {
+						if (whitespace) {
+							read = reader.read();
 						}
-						words[wordQuantities] = word;
-						quantities[wordQuantities] = 1;
-						wordQuantities++;
-						word = "";
 					}
 				}
 			} finally {
@@ -94,40 +79,3 @@ public class WordStatWordsSuffix {
 		}
 	}
 }
-
-/*
-Testing Base
-    Running test 01: java Reverse [1 input lines]
-    Running test 02: java Reverse [2 input lines]
-    Running test 03: java Reverse [3 input lines]
-    Running test 04: java Reverse [4 input lines]
-Exception in thread "main" java.lang.AssertionError: Line 3:
-     expected ``,
-       actual `3 2 1`
-        at base.Asserts.error(Asserts.java:75)
-        at base.Asserts.assertTrue(Asserts.java:41)
-        at base.Asserts.assertEquals(Asserts.java:20)
-        at base.Runner.lambda$testEquals$0(Runner.java:36)
-        at base.TestCounter.lambda$test$0(TestCounter.java:58)
-        at base.TestCounter.lambda$testV$2(TestCounter.java:71)
-        at base.Log.silentScope(Log.java:40)
-        at base.TestCounter.testV(TestCounter.java:70)
-        at base.TestCounter.test(TestCounter.java:57)
-        at base.Runner.testEquals(Runner.java:30)
-        at reverse.ReverseTester$Checker.test(ReverseTester.java:102)
-        at reverse.ReverseTester$Checker.test(ReverseTester.java:96)
-        at reverse.ReverseTester$Checker.test(ReverseTester.java:149)
-        at reverse.ReverseTester.run(ReverseTester.java:67)
-        at reverse.ReverseTester.lambda$variant$2(ReverseTester.java:44)
-        at base.Selector.lambda$test$2(Selector.java:79)
-        at base.Log.lambda$action$0(Log.java:18)
-        at base.Log.silentScope(Log.java:40)
-        at base.Log.scope(Log.java:31)
-        at base.Log.scope(Log.java:24)
-        at base.Selector.lambda$test$3(Selector.java:79)
-        at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
-        at base.Selector.test(Selector.java:79)
-        at base.Selector.main(Selector.java:51)
-        at reverse.FullFastReverseTest.main(FullFastReverseTest.java:15)
-
-* */
