@@ -3,50 +3,31 @@ import java.util.*;
 
 public class Wspp {
     public static void main(String[] args) {
-        int wordQuantities = 0;
-        HashMap<String, List<Integer>> words = new LinkedHashMap<>();
         int quantity = 0;
+        HashMap<String, List<Integer>> words = new LinkedHashMap<>();
         try {
-            Reader reader = new InputStreamReader(new FileInputStream(args[0]), "utf-8");
+            Scanner scanner = new Scanner(new FileInputStream(args[0]));
             try {
-                int read = reader.read();
-                StringBuilder wordBuilder = new StringBuilder();
-                while (read >= 0) {
-                    char symbol = (char) read;
-                    boolean whitespace = true;
-                    if (Character.isLetter(symbol) || symbol == '\'' || Character.getType(symbol) == Character.DASH_PUNCTUATION) {
-                        whitespace = false;
-                        wordBuilder.append(symbol);
-                        read = reader.read();
-                    }
-                    if (wordBuilder.length() != 0 & (whitespace | read < 0)) {
-                        String wordToAdd = wordBuilder.toString();
-                        wordToAdd = wordToAdd.toLowerCase();
-                        if (words.containsKey(wordToAdd)) {
-                            List<Integer> copy = words.get(wordToAdd);
+                while (scanner.hasNextWord()) {
+                    String word = scanner.nextWord().toLowerCase();
+                    if (word != "") {
+                        if (words.containsKey(word)) {
+                            List<Integer> copy = words.get(word);
                             quantity++;
                             copy.add(quantity);
                             copy.set(0, copy.get(0) + 1);
-                            words.put(wordToAdd, copy);
+                            words.put(word, copy);
                         } else {
                             List<Integer> newList = new ArrayList<Integer>();
                             newList.add(1);
                             quantity++;
                             newList.add(quantity);
-                            words.put(wordToAdd, newList);
-                        }
-                        wordBuilder = new StringBuilder();
-                        if (whitespace) {
-                            read = reader.read();
-                        }
-                    } else {
-                        if (whitespace) {
-                            read = reader.read();
+                            words.put(word, newList);
                         }
                     }
                 }
             } finally {
-                reader.close();
+                scanner.close();
             }
         } catch (IOException e) {
             System.out.println("Reading error: " + e.getMessage());
