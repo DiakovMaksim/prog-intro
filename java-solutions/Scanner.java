@@ -94,6 +94,27 @@ public class Scanner {
         }
         return nextString.toString();
     }
+    public String nextWord() {
+        StringBuilder nextWord = new StringBuilder();
+        boolean inNextWord = false;
+        while (quantity > 0) {
+            while (position < quantity) {
+                if (Character.isLetter(buffer[position]) || buffer[position] == '\''
+                        || Character.getType(buffer[position]) == Character.DASH_PUNCTUATION) {
+                    inNextWord = true;
+                    nextWord.append(buffer[position]);
+                    position++;
+                } else{
+                    position++;
+                    if (inNextWord) {
+                        return nextWord.toString();
+                    }
+                }
+            }
+            rebuffering();
+        }
+        return nextWord.toString();
+    }
     public String nextLine() {
         StringBuilder nextLine = new StringBuilder();
         while (quantity > 0) {
@@ -150,7 +171,29 @@ public class Scanner {
         return true;
     }
     public boolean hasNextInt() {
-        return hasNext();
+        while (quantity > 0) {
+            while (position < quantity) {
+                if (Character.isDigit(buffer[position]) | buffer[position] == '+' | buffer[position] == '-') {
+                    return true;
+                }
+                position++;
+            }
+            rebuffering();
+        }
+        return false;
+    }
+    public boolean hasNextWord() {
+        while (quantity > 0) {
+            while (position < quantity) {
+                if (Character.isLetter(buffer[position]) || buffer[position] == '\''
+                        || Character.getType(buffer[position]) == Character.DASH_PUNCTUATION) {
+                    return true;
+                }
+                position++;
+            }
+            rebuffering();
+        }
+        return false;
     }
     public void close() {
         try {
