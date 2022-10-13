@@ -9,7 +9,7 @@ public class ReverseAbc {
             String line = scanString.nextLine();
             Scanner scanInt = new Scanner(line);
             int j = 0;
-            while(scanInt.hasNextInt()) {
+            while(scanInt.hasNext()) {
                 if(j >= nums[i].length) {
                     String[] copy1d = Arrays.copyOf(nums[i], 2 * nums[i].length);
                     nums[i] = copy1d;
