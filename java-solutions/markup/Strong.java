@@ -9,7 +9,13 @@ public class Strong extends MarkUpElement {
 
     @Override
     public void toMarkdown(StringBuilder entry) {
-        super.specialSymbol = "__";
+        super.specialSymbolStart = "__";
         super.toMarkdown(entry);
+    }
+    @Override
+    public void toTex(StringBuilder entry) {
+        super.specialSymbolStart = "\\textbf{";
+        super.specialSymbolEnd = "}";
+        super.toTex(entry);
     }
 }
