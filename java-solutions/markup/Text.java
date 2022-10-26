@@ -7,14 +7,11 @@ public class Text extends MarkUpElement {
 
     @Override
     public void toMarkdown(StringBuilder entry) {
-        super.specialSymbolStart = "";
-        super.toMarkdown(entry);
+        entry.append(this.entryText);
     }
 
     @Override
     public void toTex(StringBuilder entry) {
-        super.specialSymbolStart = "";
-        super.specialSymbolEnd = "";
-        super.toTex(entry);
+        entry.append(this.entryText);
     }
 }

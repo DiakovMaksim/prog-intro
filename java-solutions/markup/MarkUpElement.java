@@ -3,38 +3,32 @@ package markup;
 import java.util.List;
 
 public abstract class MarkUpElement implements MarkUpable {
-    StringBuilder entryBBCode;
-    StringBuilder entryTex;
+    StringBuilder entryText;
+    List<MarkUpElement> entry;
     String specialSymbolStart;
     String specialSymbolEnd;
     public MarkUpElement(StringBuilder entry) {
-        this.entryBBCode = entry;
-        this.entryTex = entry;
+        this.entryText = entry;
     }
 
     public MarkUpElement(List<MarkUpElement> entry) {
-        this.entryBBCode = new StringBuilder();
-        this.entryTex = new StringBuilder();
-        for (MarkUpElement element : entry) {
-            StringBuilder elementString = new StringBuilder();
-            element.toMarkdown(elementString);
-            this.entryTex.append(elementString);
-            elementString = new StringBuilder();
-            element.toTex(elementString);
-            this.entryBBCode.append(elementString);
-        }
+        this.entry = entry;
     }
 
     @Override
     public void toMarkdown(StringBuilder entry) {
         entry.append(specialSymbolStart);
-        entry.append(this.entryTex);
+        for (MarkUpElement part : this.entry) {
+            part.toMarkdown(entry);
+        }
         entry.append(specialSymbolStart);
     }
     @Override
     public void toTex(StringBuilder entry) {
         entry.append(specialSymbolStart);
-        entry.append(this.entryBBCode);
+        for (MarkUpElement part : this.entry) {
+            part.toTex(entry);
+        }
         entry.append(specialSymbolEnd);
     }
 }
