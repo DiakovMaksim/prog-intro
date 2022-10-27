@@ -4,6 +4,7 @@ import java.util.*;
 public class WsppCountPosition {
     public static void main(String[] args) {
         int lineNumber = 0;
+        // Map
         HashMap<String, List<Integer>> words = new HashMap<>();
         try {
             Scanner lineScanner = new Scanner(new FileInputStream(args[0]));
@@ -16,6 +17,7 @@ public class WsppCountPosition {
                     while (scanner.hasNextWord()) {
                         String word = scanner.nextWord().toLowerCase();
                         if (word != "") {
+                            // getOeDefault
                             if (words.containsKey(word)) {
                                 List<Integer> copy = words.get(word);
                                 quantity++;
