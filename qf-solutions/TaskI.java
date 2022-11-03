@@ -21,16 +21,8 @@ public class TaskI {
             yr = Math.max(yr, y + h);
         }
         int h1,h2;
-        if ((xr - xl) % 2 == 1) {
-            h1 = (xr - xl) / 2 + 1;
-        } else {
-            h1 = (xr - xl) / 2;
-        }
-        if ((yr - yl) % 2 == 1) {
-            h2 = (yr - yl) / 2 + 1;
-        } else {
-            h2 = (yr - yl) / 2;
-        }
+        h1 = (xr - xl) / 2 + ((xr-xl) % 2);
+        h2 = (yr - yl) / 2 + ((yr - yl) % 2);
         System.out.println((xl + xr) / 2 + " " + (yl + yr) / 2 + " " + Math.max(h1, h2));
     }
 }
