@@ -80,7 +80,7 @@ public class Scanner {
                     nextLine.append(buffer[position]);
                 } else {
                     position ++;
-                    if (nextLine.charAt(nextLine.length() - 1) == '\r') {
+                    if (nextLine.length() > 0 && nextLine.charAt(nextLine.length() - 1) == '\r') {
                         nextLine.delete(nextLine.length() - 1, nextLine.length());
                     }
                     return nextLine.toString();
