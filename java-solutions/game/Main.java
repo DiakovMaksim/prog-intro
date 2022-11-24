@@ -23,11 +23,16 @@ public class Main {
             System.out.println("Error: invalid enter");
             return;
         }
-        final Game game = new Game(true, new HumanPlayer(), new RandomPlayer(mnk[0], mnk[1]));
-        int result;
         int Xwins = 0;
         int Owins = 0;
+        Game game;
         do {
+            if ((Xwins + Owins) % 2 == 0) {
+                game = new Game(true, new HumanPlayer(), new RandomPlayer(mnk[0], mnk[1]));
+            } else {
+                game = new Game(true, new RandomPlayer(mnk[0], mnk[1]), new HumanPlayer());
+            }
+            int result;
             result = game.play(new TicTacToeBoard(mnk[0], mnk[1], mnk[2]));
             if (result == 1) {
                 Xwins++;
