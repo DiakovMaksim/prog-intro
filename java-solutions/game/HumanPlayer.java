@@ -36,6 +36,9 @@ public class HumanPlayer implements Player {
                 sc = new Scanner(in.nextLine());
             }
             moveCol = sc.nextInt();
+            while (sc.hasNextInt()) {
+                int bucket = sc.nextInt();
+            }
             final Move move = new Move(moveRow, moveCol, cell);
             if (position.isValid(move)) {
                 return move;

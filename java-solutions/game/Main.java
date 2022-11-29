@@ -27,16 +27,19 @@ public class Main {
         int Owins = 0;
         Game game;
         do {
+            int result;
+            boolean XFirst;
             if ((Xwins + Owins) % 2 == 0) {
                 game = new Game(true, new HumanPlayer(), new RandomPlayer(mnk[0], mnk[1]));
+                XFirst = true;
             } else {
                 game = new Game(true, new RandomPlayer(mnk[0], mnk[1]), new HumanPlayer());
+                XFirst = false;
             }
-            int result;
             result = game.play(new TicTacToeBoard(mnk[0], mnk[1], mnk[2]));
-            if (result == 1) {
+            if (result == 1 && XFirst || result == 2 && !XFirst) {
                 Xwins++;
-            } else if (result == 2) {
+            } else if (result == 2 || result == 1) {
                 Owins++;
             }
         } while (Xwins < mnk[3] && Owins < mnk[3]);
