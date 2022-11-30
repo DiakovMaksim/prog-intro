@@ -26,6 +26,7 @@ public class Main {
         int Xwins = 0;
         int Owins = 0;
         Game game;
+        Board board = new TicTacToeBoard(mnk[0], mnk[1], mnk[2]);
         do {
             int result;
             boolean XFirst;
@@ -36,7 +37,8 @@ public class Main {
                 game = new Game(true, new RandomPlayer(mnk[0], mnk[1]), new HumanPlayer());
                 XFirst = false;
             }
-            result = game.play(new TicTacToeBoard(mnk[0], mnk[1], mnk[2]));
+            result = game.play(board);
+            board.clear();
             if (result == 1 && XFirst || result == 2 && !XFirst) {
                 Xwins++;
             } else if (result == 2 || result == 1) {

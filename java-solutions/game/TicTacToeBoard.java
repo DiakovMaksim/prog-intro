@@ -109,6 +109,14 @@ public final class TicTacToeBoard implements Board, Position {
         turn = turn == Cell.X ? Cell.O : Cell.X;
         return Result.UNKNOWN;
     }
+
+    @Override
+    public void clear() {
+        for (Cell[] row : cells) {
+            Arrays.fill(row, Cell.E);
+        }
+    }
+
     @Override
     public boolean isValid(final Move move) {
         return 0 <= move.getRow() && move.getRow() < m
