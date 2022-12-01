@@ -45,15 +45,15 @@ public class AbstractOperation extends AbstractExpression {
     }
     @Override
     public boolean equals(Object comparior) {
-        return comparior != null && this.getClass() == comparior.getClass() && this.firstExpression.equals(((AbstractOperation) comparior).firstExpression) && this.secondExpression.equals(((AbstractOperation) comparior).secondExpression);
+        return comparior != null && this.getClass() == comparior.getClass() && this.symbol == ((AbstractOperation) comparior).symbol && this.firstExpression.equals(((AbstractOperation) comparior).firstExpression) && this.secondExpression.equals(((AbstractOperation) comparior).secondExpression);
     }
     @Override
     public int hashCode() {
         return switch (symbol) {
-            case ('+') -> 601 * (firstExpression.hashCode() * 17 * 17 + secondExpression.hashCode() * 19 * 19);
-            case ('-') -> 701 * (firstExpression.hashCode() * 29 * 29 + secondExpression.hashCode() * 31 * 31);
-            case ('*') -> 809 * (firstExpression.hashCode() * 49 * 49 + secondExpression.hashCode() * 53 * 53);
-            case ('/') -> 907 * (firstExpression.hashCode() * 61 * 61 + secondExpression.hashCode() * 67 * 67);
+            case ('+') -> 601 * (firstExpression.hashCode() * 17 + secondExpression.hashCode() * 19);
+            case ('-') -> 701 * (firstExpression.hashCode() * 29 + secondExpression.hashCode() * 31);
+            case ('*') -> 809 * (firstExpression.hashCode() * 49 + secondExpression.hashCode() * 53);
+            case ('/') -> 907 * (firstExpression.hashCode() * 61 + secondExpression.hashCode() * 67);
             default -> 0;
         };
     }
