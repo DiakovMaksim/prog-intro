@@ -19,6 +19,7 @@ public class AbstractOperation extends AbstractExpression {
             default -> 0;
         };
     }
+
     @Override
     public double evaluate(double variable) {
         return switch (symbol) {
