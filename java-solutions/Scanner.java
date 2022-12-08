@@ -81,7 +81,7 @@ public class Scanner {
                     nextLine.append(buffer[position]);
                 } else {
                     position++;
-                    return nextLine.toString().delete(nextLine.length() - System.lineSeparator().length() + 1, nextLine.length());
+                    return nextLine.delete(nextLine.length() - System.lineSeparator().length() + 1, nextLine.length()).toString();
                 }
                 position++;
             }
