@@ -11,33 +11,23 @@ public class AbstractOperation extends AbstractExpression {
     }
     @Override
     public int evaluate(int variable) {
-        return switch (symbol) {
-            case ('+') -> firstExpression.evaluate(variable) + secondExpression.evaluate(variable);
-            case ('-') -> firstExpression.evaluate(variable) - secondExpression.evaluate(variable);
-            case ('*') -> firstExpression.evaluate(variable) * secondExpression.evaluate(variable);
-            case ('/') -> firstExpression.evaluate(variable) / secondExpression.evaluate(variable);
-            default -> 0;
-        };
+        return this.eval(firstExpression.evaluate(variable), secondExpression.evaluate(variable));
     }
+
+    public int eval(int left, int right) {
+        return 0;
+    }
+    public double eval(double left, double right) {
+        return 0;
+    }
+
     @Override
     public double evaluate(double variable) {
-        return switch (symbol) {
-            case ('+') -> firstExpression.evaluate(variable) + secondExpression.evaluate(variable);
-            case ('-') -> firstExpression.evaluate(variable) - secondExpression.evaluate(variable);
-            case ('*') -> firstExpression.evaluate(variable) * secondExpression.evaluate(variable);
-            case ('/') -> firstExpression.evaluate(variable) / secondExpression.evaluate(variable);
-            default -> 0;
-        };
+        return this.eval(firstExpression.evaluate(variable), secondExpression.evaluate(variable));
     }
     @Override
     public int evaluate(int x, int y, int z) {
-        return switch (symbol) {
-            case ('+') -> firstExpression.evaluate(x, y, z) + secondExpression.evaluate(x, y, z);
-            case ('-') -> firstExpression.evaluate(x, y, z) - secondExpression.evaluate(x, y, z);
-            case ('*') -> firstExpression.evaluate(x, y, z) * secondExpression.evaluate(x, y, z);
-            case ('/') -> firstExpression.evaluate(x, y, z) / secondExpression.evaluate(x, y, z);
-            default -> 0;
-        };
+        return this.eval(firstExpression.evaluate(x, y, z), secondExpression.evaluate(x, y, z));
     }
     @Override
     public String toString() {
