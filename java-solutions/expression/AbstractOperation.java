@@ -13,14 +13,12 @@ public class AbstractOperation extends AbstractExpression {
     public int evaluate(int variable) {
         return this.eval(firstExpression.evaluate(variable), secondExpression.evaluate(variable));
     }
-
     public int eval(int left, int right) {
         return 0;
     }
     public double eval(double left, double right) {
         return 0;
     }
-
     @Override
     public double evaluate(double variable) {
         return this.eval(firstExpression.evaluate(variable), secondExpression.evaluate(variable));
