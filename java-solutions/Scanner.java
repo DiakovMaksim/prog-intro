@@ -77,7 +77,7 @@ public class Scanner {
         StringBuilder nextLine = new StringBuilder();
         while (quantity > 0) {
             while (position < quantity) {
-                if (!(buffer[position] == System.lineSeparator().charAt(System.lineSeparatot.length() - 1))) {
+                if (!(buffer[position] == System.lineSeparator().charAt(System.lineSeparator().length() - 1))) {
                     nextLine.append(buffer[position]);
                 } else {
                     position++;
