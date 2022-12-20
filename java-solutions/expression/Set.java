@@ -6,8 +6,7 @@ public class Set extends AbstractOperation{
     }
     @Override
     public int eval(int left, int right) {
-        left |= 1 << right;
-        return left;
+        return left | (1 << right);
     }
     @Override
     public String toString() {
