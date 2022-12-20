@@ -15,6 +15,9 @@ public class BaseParser {
         ch = source.hasNext() ? source.next() : END;
         return result;
     }
+    protected char see() {
+        return ch;
+    }
 
     protected boolean test(final char expected) {
         return ch == expected;
@@ -59,4 +62,5 @@ public class BaseParser {
         take();
         }
     }
+
 }

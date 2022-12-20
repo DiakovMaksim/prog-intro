@@ -1,5 +1,5 @@
 package expression.parser;
-
+import expression.*;
 public final class ExpressionParseStarter {
     public static AbstractExpression parse(final String source) {
         return parse(new StringSource(source));
@@ -12,61 +12,51 @@ public final class ExpressionParseStarter {
             super(source);
         }
         public AbstractExpression parseExpression() {
-            AbstractExpression result = parseAbstractExpression(parseElement(), "");
+            AbstractExpression result = parseAbstractExpression(parseElement(), "", 0);
             while (!eof()) {
-                result = parseAbstractExpression(result, "");
+                result = parseAbstractExpression(result, "",0);
             }
             return result;
         }
-
-        private AbstractExpression parseAbstractExpression(AbstractExpression leftSide, String start) {
+        private int priority(char enter) {
+            return switch (enter) {
+                case '+', '-' -> 2;
+                case '*', '/' -> 3;
+                case 'c', 's' -> 1;
+                default -> 5;
+            };
+        }
+        private AbstractExpression parseAbstractExpression(AbstractExpression leftSide, String start, int to) {
             skipWhitespace();
-            if (!eof() && ! take(')')) {
-                if (take('+')) {
-                    AbstractExpression rightSide = parseElement();
-                    skipWhitespace();
-                    if (!eof() && !take(')')) {
-                        if (now('+') || now('-')) {
-                            leftSide = new Add(leftSide, rightSide);
-                            return parseAbstractExpression(leftSide, start);
-                        } else {
-                            return parseAbstractExpression(new Add(leftSide, parseAbstractExpression(rightSide, "")), start);
-                        }
-                    } else {
-                        return new Add(leftSide, rightSide);
+            if (!eof()) {
+                if (now(')')) {
+                    if (start == "(") {
+                        take(')');
                     }
+                    return leftSide;
+                }
+                if (priority(see()) <= to) {
+                    return leftSide;
+                }
+                if (take('+')) {
+                    return parseAbstractExpression(new Add(leftSide, parseAbstractExpression(parseElement(), "", 2)), start, to);
                 }
                 if (take('-')) {
-                    AbstractExpression rightSide = parseElement();
-                    skipWhitespace();
-                    if (!eof() && !take(')')) {
-                        if (now('+') || now('-')) {
-                            leftSide = new Subtract(leftSide, rightSide);
-                            return parseAbstractExpression(leftSide, start);
-                        } else {
-                            return parseAbstractExpression(new Subtract(leftSide, parseAbstractExpression(rightSide, "")), start);
-                        }
-                    } else {
-                        return new Subtract(leftSide, rightSide);
-                    }
+                    return parseAbstractExpression(new Subtract(leftSide, parseAbstractExpression(parseElement(), "", 2)), start, to);
                 }
                 if (take('*')) {
-                    AbstractExpression rightSide = parseElement();
-                    skipWhitespace();
-                    if (now('*') || now('/') || start == "(") {
-                        return parseAbstractExpression(new Multiply(leftSide, rightSide), start);
-                    } else {
-                        return new Multiply(leftSide, rightSide);
-                    }
+                    return parseAbstractExpression(new Multiply(leftSide, parseAbstractExpression(parseElement(), "", 3)), start, to);
                 }
                 if (take('/')) {
-                    AbstractExpression rightSide = parseElement();
-                    skipWhitespace();
-                    if (now('*') || now('/') || start == "(") {
-                        return parseAbstractExpression(new Divide(leftSide, rightSide), start);
-                    } else {
-                        return new Divide(leftSide, rightSide);
-                    }
+                    return parseAbstractExpression(new Divide(leftSide, parseAbstractExpression(parseElement(), "", 3)), start, to);
+                }
+                if (take('s')) {
+                    expect("et");
+                    return parseAbstractExpression(new Set(leftSide, parseAbstractExpression(parseElement(), "", 1)), start, to);
+                }
+                if (take('c')) {
+                    expect("lear");
+                    return parseAbstractExpression(new Clear(leftSide, parseAbstractExpression(parseElement(), "", 1)), start, to);
                 }
             }
             return leftSide;
@@ -79,7 +69,7 @@ public final class ExpressionParseStarter {
             } else if (between('0', '9')) {
                 return parseConst("");
             } else if (take('(')) {
-                return parseAbstractExpression(parseElement(), "(");
+                return parseAbstractExpression(parseElement(), "(", 0);
             } else if (take('-')) {
                 if (between('1', '9')) {
                     return parseConst("-");
@@ -87,7 +77,7 @@ public final class ExpressionParseStarter {
                     return new Minus(parseElement());
                 }
             } else {
-                throw error("Unsupported input: '" + take() + "' ");
+                throw error("Unsupported input: '" + take() + "'");
             }
         }
 
