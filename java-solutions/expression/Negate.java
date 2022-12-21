@@ -1,7 +1,7 @@
 package expression;
 
-public class Minus extends AbstractOperation {
-    public Minus(AbstractExpression expression) {
+public class Negate extends AbstractOperation {
+    public Negate(AbstractExpression expression) {
         super(new Const(0), expression, '-');
     }
     @Override

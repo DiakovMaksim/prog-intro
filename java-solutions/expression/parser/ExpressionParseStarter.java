@@ -74,7 +74,7 @@ public final class ExpressionParseStarter {
                 if (between('1', '9')) {
                     return parseConst("-");
                 } else {
-                    return new Minus(parseElement());
+                    return new Negate(parseElement());
                 }
             } else {
                 throw error("Unsupported input: '" + take() + "'");
