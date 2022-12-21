@@ -1,8 +1,8 @@
 package expression;
 
 public class AbstractOperation extends AbstractExpression {
-    AbstractExpression firstExpression;
-    AbstractExpression secondExpression;
+    protected AbstractExpression firstExpression;
+    protected AbstractExpression secondExpression;
     char symbol;
     public AbstractOperation(AbstractExpression firstExpression, AbstractExpression secondExpression, char symbol) {
         this.firstExpression = firstExpression;

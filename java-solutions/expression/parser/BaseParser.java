@@ -57,7 +57,7 @@ public class BaseParser {
     protected boolean now(final char expected) {
         return ch == expected;
     }
-    void skipWhitespace() {
+    protected void skipWhitespace() {
         while (between((char) 1, (char) 32) || between((char) 8233, (char) 8233)) {
         take();
         }
