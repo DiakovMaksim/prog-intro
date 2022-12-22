@@ -1,19 +1,15 @@
 package expression;
 
-public class Negate extends AbstractOperation {
+public class Negate extends AbstractUnaryOperation {
     public Negate(AbstractExpression expression) {
-        super(new Const(0), expression, '-');
+        super(expression, "-");
     }
     @Override
-    public int eval(int left, int right) {
-        return left - right;
-    }
-    @Override
-    public double eval(double left, double right) {
-        return left - right;
+    public int eval(int expression) {
+        return -expression;
     }
     @Override
     public String toString() {
-        return "-(" + this.secondExpression + ")";
+        return "-(" + this.expression + ")";
     }
 }
